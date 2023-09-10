@@ -31,10 +31,9 @@ SPELLdata = sheet.worksheet("SpellsBot").get_all_values()
 #gSheet.printdata(SPELLdata)
 spellreq = "Acid Splash"
 spellreq2 = "test"
-print(botcommands.searchspell(spellreq, SPELLdata))
-print(botcommands.searchspell(spellreq2, SPELLdata))
+#print(botcommands.searchspell(spellreq, SPELLdata))
 
-"""
+
 #-------Discord Bot----------------------------------------------------
 # Create a bot instance with a prefix for commands
 bot = discord.Client(intents=discord.Intents.all())
@@ -48,10 +47,31 @@ async def on_ready():
 async def on_message(message):
     if message.author == bot.user:
         return
-    #test - if !hello bot replys with hello (works in private messaging as well)
-    if ("Keeper" in message.content or "keeper" in message.content):
-        om = ""
+        informant = message.author.name         #the person messaging
+        #if someone is adressing the keeper
+        if ("Keeper" in message.content or "keeper" in message.content):
+            om = ""    
+            if 'What are The Archives' in message.content or 'what are the archives' in message.content or 'what are The Archives' in message.content or 'What are the archives' in message.content or "what are the Archives" in message.content:
+                om = "The Archives is a place limitless information, with knowledge gathered from many worlds and the realms within. I will answer questions to the best of my ability but The Arbiter of The Archives has deemed many archives inaccessible to you. For now."
+            #bot introduction
+            if 'Who are you' in message.content or 'who are you' in message.content:
+                om = "I am The Keeper of The Archives. I am here to answer any questions permitted within your assigned access level."
+            if 'hello' in message.content or 'Hello' in message.content:
+                await message.channel.send("Hello")      
+#get spell information
+    if message.content.startswith('!spell'):
+        #call spell function
+        messageSTR = message.content.replace('!spell ', '')
+        await message.channel.send(botcommands.searchspell(messageSTR, SPELLdata))
+    if message.content.startswith('!hyp'):
+        #call hyp function
+        temp = str(message.content)
+        await message.channel.send(botcommands.calchyp(temp))
+    if message.content.startswith('!dmg'):
+        #call damage function
+        temp = str(message.content)
+        await message.channel.send(botcommands.calcdmg(temp))
+  
 #shhh -  for token menes
 my_secret = os.environ['Secret_Memes']
 bot.run(my_secret)
-"""
